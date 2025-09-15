@@ -7,10 +7,17 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
   { name: "Laman Utama", href: "/" },
+  { name: "Demo", href: "/demo" },
   { name: "E-book", href: "/ebooks" },
-  { name: "Berita AI", href: "/news" },
-  { name: "AI Malaysia", href: "/ai-malaysia" },
   { name: "Prompts", href: "/prompts" },
+  {
+    name: "Berita",
+    href: "#",
+    dropdown: [
+      { name: "Berita AI", href: "/news" },
+      { name: "AI Malaysia", href: "/ai-malaysia" }
+    ]
+  },
   { name: "Tentang Kami", href: "/about" },
   { name: "Hubungi", href: "/contact" },
 ];
@@ -18,6 +25,7 @@ const navigation = [
 export function Navigation() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -35,17 +43,59 @@ export function Navigation() {
           <div className="hidden md:block">
             <div className="flex items-center space-x-8">
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm font-medium transition-colors hover:text-accent ${
-                    pathname === item.href
-                      ? "text-accent"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {item.name}
-                </Link>
+                <div key={item.name} className="relative">
+                  {item.dropdown ? (
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setDropdownOpen(item.name)}
+                      onMouseLeave={() => setDropdownOpen(null)}
+                    >
+                      <button
+                        className={`text-sm font-medium transition-colors hover:text-accent flex items-center ${
+                          item.dropdown.some(subItem => pathname === subItem.href)
+                            ? "text-accent"
+                            : "text-muted-foreground"
+                        }`}
+                      >
+                        {item.name}
+                        <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+
+                      {dropdownOpen === item.name && (
+                        <div className="absolute top-full left-0 mt-2 w-48 bg-background border border-border rounded-md shadow-lg z-50">
+                          <div className="py-1">
+                            {item.dropdown.map((subItem) => (
+                              <Link
+                                key={subItem.name}
+                                href={subItem.href}
+                                className={`block px-4 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground ${
+                                  pathname === subItem.href
+                                    ? "text-accent bg-accent/10"
+                                    : "text-muted-foreground"
+                                }`}
+                              >
+                                {subItem.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`text-sm font-medium transition-colors hover:text-accent ${
+                        pathname === item.href
+                          ? "text-accent"
+                          : "text-muted-foreground"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
               ))}
               <ThemeToggle />
             </div>
@@ -98,18 +148,43 @@ export function Navigation() {
           <div className="md:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
-                    pathname === item.href
-                      ? "bg-accent text-accent-foreground"
-                      : "text-muted-foreground"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
+                <div key={item.name}>
+                  {item.dropdown ? (
+                    <>
+                      <div className="block rounded-md px-3 py-2 text-base font-medium text-muted-foreground">
+                        {item.name}
+                      </div>
+                      <div className="ml-4 space-y-1">
+                        {item.dropdown.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className={`block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
+                              pathname === subItem.href
+                                ? "bg-accent text-accent-foreground"
+                                : "text-muted-foreground"
+                            }`}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`block rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
+                        pathname === item.href
+                          ? "bg-accent text-accent-foreground"
+                          : "text-muted-foreground"
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
+                </div>
               ))}
             </div>
           </div>

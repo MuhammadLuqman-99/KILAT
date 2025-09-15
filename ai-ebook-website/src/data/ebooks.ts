@@ -63,5 +63,29 @@ export const ebooks: Ebook[] = [
       "Bonus: 100+ creative prompts"
     ],
     slug: "creative-ai-art-writing-content"
+  },
+  {
+    id: "4",
+    title: "AI-Powered Deployment & DevOps Mastery",
+    description: "Revolutionize your deployment process with AI. Learn to automate server setup, generate deployment scripts, troubleshoot issues, and optimize performance using AI tools.",
+    price: 69.99,
+    originalPrice: 99.99,
+    image: "/images/ebook-ai-deployment.jpg",
+    category: "DevOps AI",
+    pages: 320,
+    rating: 4.8,
+    reviews: 189,
+    author: "KILAT",
+    features: [
+      "AI-generated deployment scripts untuk Laravel, Node.js, dan lain-lain",
+      "Smart server configuration dengan AI analysis",
+      "Automated troubleshooting dan performance optimization",
+      "50+ deployment templates siap guna",
+      "Bonus: Interactive AI deployment assistant",
+      "Security scanning dan best practices dengan AI",
+      "Cloud deployment strategies (AWS, DigitalOcean, etc.)",
+      "Docker containerization dengan AI guidance"
+    ],
+    slug: "ai-powered-deployment-devops-mastery"
   }
 ];

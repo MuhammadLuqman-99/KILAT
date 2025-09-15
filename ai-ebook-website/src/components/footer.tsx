@@ -2,12 +2,12 @@ import Link from "next/link";
 
 const navigation = {
   main: [
-    { name: "Home", href: "/" },
-    { name: "Ebooks", href: "/ebooks" },
-    { name: "AI News", href: "/news" },
+    { name: "Laman Utama", href: "/" },
+    { name: "E-book", href: "/ebooks" },
+    { name: "Berita AI", href: "/news" },
     { name: "Prompts", href: "/prompts" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Tentang Kami", href: "/about" },
+    { name: "Hubungi", href: "/contact" },
   ],
   social: [
     {
@@ -77,7 +77,7 @@ export function Footer() {
         </div>
         <div className="mt-10 border-t pt-8">
           <p className="text-xs leading-5 text-muted-foreground text-center">
-            &copy; 2024 KILAT. All rights reserved. Empowering Malaysian minds with AI knowledge.
+            &copy; 2024 KILAT. Hak cipta terpelihara. Memperkasakan minda Malaysia dengan pengetahuan AI.
           </p>
         </div>
       </div>

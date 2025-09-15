@@ -2,11 +2,12 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prompts } from "@/data/prompts";
+import { CopyButton } from "@/components/CopyButton";
 
 interface PromptPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -16,7 +17,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PromptPageProps): Promise<Metadata> {
-  const prompt = prompts.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const prompt = prompts.find((p) => p.slug === slug);
 
   if (!prompt) {
     return {
@@ -36,8 +38,9 @@ export async function generateMetadata({ params }: PromptPageProps): Promise<Met
   };
 }
 
-export default function PromptDetailPage({ params }: PromptPageProps) {
-  const prompt = prompts.find((p) => p.slug === params.slug);
+export default async function PromptDetailPage({ params }: PromptPageProps) {
+  const { slug } = await params;
+  const prompt = prompts.find((p) => p.slug === slug);
 
   if (!prompt) {
     notFound();
@@ -127,15 +130,10 @@ export default function PromptDetailPage({ params }: PromptPageProps) {
                   {prompt.prompt}
                 </pre>
               </div>
-              <button
-                className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-accent transition-colors"
-                title="Copy to clipboard"
-                onClick={() => navigator.clipboard.writeText(prompt.prompt)}
-              >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </button>
+              <CopyButton
+                text={prompt.prompt}
+                className="absolute top-4 right-4"
+              />
             </div>
           ) : (
             <div className="bg-gradient-to-r from-accent/10 to-accent/5 rounded-lg p-8 text-center border-2 border-dashed border-accent/20">

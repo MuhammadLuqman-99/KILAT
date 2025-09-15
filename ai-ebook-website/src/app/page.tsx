@@ -31,6 +31,12 @@ export default function Home() {
                 Jelajahi E-book
               </Link>
               <Link
+                href="/demo"
+                className="rounded-md bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:from-orange-600 hover:to-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 transition-all"
+              >
+                Cuba Percuma
+              </Link>
+              <Link
                 href="/prompts"
                 className="text-sm font-semibold leading-6 text-foreground hover:text-accent transition-colors"
               >
